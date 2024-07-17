@@ -1,0 +1,288 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>datawhale夏令营第二次NLP学习打卡 | Gamma's Secret Space</title><meta name="author" content="gamma"><meta name="copyright" content="gamma"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="第二次任务打卡记录环境配置考虑到本次赛题的任务在于翻译，那么在训练之前，要先分割句子才好进行翻译 那么就需要对中文和英文进行不同的分割和分析，将用到四个库：  jiaba 用于分割中文语句 torchtext 用于 NLP 领域的处理库 sacrebleu 采用 BLEU 评分标准的评分器，用于衡量翻译结果的相似度 spacy 中的 en_tokenizer也就是英文分词器  前三个直接 pip，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="datawhale夏令营第二次NLP学习打卡">
+<meta property="og:url" content="http://hu-gamma.github.io/2024/07/17/datawhale%E5%A4%8F%E4%BB%A4%E8%90%A5%E7%AC%AC%E4%BA%8C%E6%AC%A1NLP%E5%AD%A6%E4%B9%A0%E6%89%93%E5%8D%A1/index.html">
+<meta property="og:site_name" content="Gamma&#39;s Secret Space">
+<meta property="og:description" content="第二次任务打卡记录环境配置考虑到本次赛题的任务在于翻译，那么在训练之前，要先分割句子才好进行翻译 那么就需要对中文和英文进行不同的分割和分析，将用到四个库：  jiaba 用于分割中文语句 torchtext 用于 NLP 领域的处理库 sacrebleu 采用 BLEU 评分标准的评分器，用于衡量翻译结果的相似度 spacy 中的 en_tokenizer也就是英文分词器  前三个直接 pip，">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2024-07-17T14:50:10.000Z">
+<meta property="article:modified_time" content="2024-07-17T15:26:19.871Z">
+<meta property="article:author" content="gamma">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://hu-gamma.github.io/2024/07/17/datawhale%E5%A4%8F%E4%BB%A4%E8%90%A5%E7%AC%AC%E4%BA%8C%E6%AC%A1NLP%E5%AD%A6%E4%B9%A0%E6%89%93%E5%8D%A1/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'datawhale夏令营第二次NLP学习打卡',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-07-17 23:26:19'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">2</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr class="custom-hr"/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Gamma's Secret Space"><span class="site-name">Gamma's Secret Space</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">datawhale夏令营第二次NLP学习打卡</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-07-17T14:50:10.000Z" title="Created 2024-07-17 22:50:10">2024-07-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-07-17T15:26:19.871Z" title="Updated 2024-07-17 23:26:19">2024-07-17</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="datawhale夏令营第二次NLP学习打卡"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="第二次任务打卡记录"><a href="#第二次任务打卡记录" class="headerlink" title="第二次任务打卡记录"></a>第二次任务打卡记录</h1><h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p>考虑到本次赛题的任务在于翻译，那么在训练之前，要先分割句子才好进行翻译</p>
+<p>那么就需要对中文和英文进行不同的分割和分析，将用到四个库：</p>
+<ol>
+<li>jiaba 用于分割中文语句</li>
+<li>torchtext 用于 NLP 领域的处理库</li>
+<li>sacrebleu 采用 BLEU 评分标准的评分器，用于衡量翻译结果的相似度</li>
+<li>spacy 中的 <code>en_tokenizer</code>也就是英文分词器</li>
+</ol>
+<p>前三个直接 pip，第四个有 <code>time out</code>问题手动安装</p>
+<h2 id="数据集处理"><a href="#数据集处理" class="headerlink" title="数据集处理"></a>数据集处理</h2><ol>
+<li><p>先洗数据</p>
+<ol>
+<li>清理垃圾词汇和无用词汇，数据集在不大的情况下可以采用手动删除，但是过大的情况下可以使用正则表达式，在本次例题的环境下大多为拟声词，也就只需对 <code>（笑）``（掌声）</code>之类的东西做采集写正则表达式然后 <code>~[匹配规则]</code>即可</li>
+<li>全部文本小写<del>（中文还真是方便 w）</del></li>
+<li>长文本分段，后面好处理一点</li>
+</ol>
+</li>
+<li><p>分词</p>
+<p>考虑到无论是 <code>seq2seq</code>还是 <code>transformer</code>本质上都是词对词的变换，因此分词器是尤为重要的，中文就用 jieba 而英文就有 spacy</p>
+<p>然后就是代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">en_tokenizer =get_tokenizer(<span class="string">&#x27;spacy&#x27;</span>,language=<span class="string">&#x27;en_core_web_trf&#x27;</span>)</span><br><span class="line"></span><br><span class="line">zh_tokenizer =lambdax:<span class="built_in">list</span>(jieba.cut(x))  <span class="comment"># 使用jieba分词</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>两个分词器分别对中文和英文做出分割</p>
+</li>
+<li><p>构建词汇表和词向量</p>
+<p>词汇表有点像字典，把训练集中的所有出现过的词汇全收集下来整合打包，而词向量就是把这些词映射到数学空间，使得每一个词对应空间中的一个坐标，在之后的运算过程中就是对这些坐标进行处理，这使得人类的自然语言得以转化为数学的表达形式</p>
+</li>
+<li><p>序列处理</p>
+<ol>
+<li><p>首先先要知道机器翻译中一些表达式</p>
+<p>1.<code>&lt;bos&gt;</code> 序列开始</p>
+<p>2.<code>&lt;eos&gt;</code> 序列结束</p>
+<p>3.<code>&lt;pad&gt;</code> 用于对齐序列使得序列等长</p>
+<p>4.<code>&lt;unk&gt;</code> 表示不在词汇表中的未知词汇</p>
+</li>
+<li><p>通过对句子打上标记作划分</p>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">def__getitem__(<span class="variable language_">self</span>,idx):</span><br><span class="line"></span><br><span class="line">   en, zh =<span class="variable language_">self</span>.data[idx]</span><br><span class="line"></span><br><span class="line">   <span class="comment"># 将中英文分到两个不同的变量中</span></span><br><span class="line"></span><br><span class="line">   en_indices =[<span class="variable language_">self</span>.en_vocab[<span class="string">&#x27;&lt;bos&gt;&#x27;</span>]]+[<span class="variable language_">self</span>.en_vocab[token]<span class="keyword">for</span> token <span class="keyword">in</span> en]+[<span class="variable language_">self</span>.en_vocab[<span class="string">&#x27;&lt;eos&gt;&#x27;</span>]]</span><br><span class="line"></span><br><span class="line">   zh_indices =[<span class="variable language_">self</span>.zh_vocab[<span class="string">&#x27;&lt;bos&gt;&#x27;</span>]]+[<span class="variable language_">self</span>.zh_vocab[token]<span class="keyword">for</span> token <span class="keyword">in</span> zh]+[<span class="variable language_">self</span>.zh_vocab[<span class="string">&#x27;&lt;eos&gt;&#x27;</span>]]</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> en_indices, zh_indices</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>数据增强</p>
+<ol>
+<li>近义词同义词替换，使得词汇表更大，有更多的对应项</li>
+<li>随机删除或替换词，提高程序的稳健性</li>
+</ol>
+</li>
+</ol>
+<h2 id="模型训练"><a href="#模型训练" class="headerlink" title="模型训练"></a>模型训练</h2><ol>
+<li><p>编解码器</p>
+<p>给定输入，通过编码器生成指定码，再传输至解码器解析指定码得出结果。二者的功能大致在此</p>
+<p>而在 NLP 中，编码器要通过某种方式，使得输入的句子被转换为某种向量，再由解码器通过某种方式解析出向量对应的意思</p>
+<ol>
+<li><p>Encoder</p>
+<ol>
+<li>Embedding 层</li>
+</ol>
+<p>此层的作用大致是实现由自然语言向数学向量的转换，相近的句子在向量空间中的位置相对就近，反之就远</p>
+<p>要做到句向量化，常用到：</p>
+<pre><code> 1. RNN
+ 2. CNN
+ 3. Attention
+ 4. 加权平均
+
+  我们的代码使用的是 `torch.nn.embedding`
+
+  `nn.Embedding`层本质上是一个权重矩阵，其中每一行代表词汇表中每个单词的向量表示。这个权重矩阵的大小是 `[num_embeddings, embedding_dim]`，其中 `num_embeddings`是词汇表的大小，`embedding_dim`是嵌入向量的维度。
+
+  代码注释是这么写的
+
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">num_embeddings (<span class="built_in">int</span>): size of the dictionary of embeddings</span><br><span class="line"></span><br><span class="line">embedding_dim (<span class="built_in">int</span>): the size of each embedding vector</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+  当我们向嵌入层传递一个单词的索引时，它实际上是在查找这个索引对应的权重矩阵中的行。这一行就是该单词的嵌入向量
+</code></pre>
+<ol>
+<li><p>中间层</p>
+<p>这里实现第一部分的词向量的进一步深化</p>
+<p>常常用到：</p>
+<ol>
+<li><p>CNN</p>
+</li>
+<li><p>RNN</p>
+</li>
+<li><p>Attention</p>
+</li>
+<li><p>加权平均</p>
+<p>等方式来实现进一步的在实数空间内的位置规划，而在 baseline 中使用了 GRU 的技术手段实现了操作，</p>
+<p>而 GRU 本身也是 RNN 实现的一个方式</p>
+</li>
+</ol>
+<blockquote>
+<p>门控循环单元(GRU)与普通的循环神经网络(RNN)之间的关键区别在于： 前者支持隐状态的门控。 这意味着模型有专门的机制来确定应该何时更新隐状态， 以及应该何时重置隐状态。——《动手学深度学习》</p>
+</blockquote>
+<h3 id="GRU"><a href="#GRU" class="headerlink" title="GRU"></a>GRU</h3><p>提到 GRU 就得了解一下他的原理，根据 <code>《动手学深度学习》</code>里面的说法，GRU 的构建要遵循以下步骤</p>
+<ol>
+<li><p>构建更新门（Z 门）和重置门（R 门），这两个门通过 <code>sigmoid激活函数</code>同前一个隐状态$h_{i-1}$和当前输入$x_{i}$链接，同时 Z 门和 R 门实际上是两个(0,1)的向量，而这个取值影响力这两个门的功能</p>
+<p>数学表达式如下：</p>
+<p>$$<br>R_t &#x3D; \sigma (X_t W_xr + H_{t-1} W_{hr}+ b_r)<br>$$</p>
+<p>$$<br>Z_t &#x3D; \sigma (X_t W_xz + H_{t-1} W_{hz}+ b_z)<br>$$</p>
+
+
+<p>$W_{xr}$、$W_{xz}$分别为输入权重，$W_{hr}$、$W_{hz}$为隐状态权重，$b_{r}$、$b_z$为偏置参数作修正用</p>
+<p>不难看出，输入与前一隐状态分别加权运算，再加以 sigmoid 函数$\sigma$实现向(0,1)向量的变换即可得到下一个 Z 门和 R 门</p>
+</li>
+</ol>
+</li>
+<li><p>计算候选隐向量$\tilde{\mathbf{H}}_t$</p>
+<p>数学公式如下</p>
+<p>$$<br>\tilde{\mathbf{H}}<em>{t}&#x3D;\tanh \left(\mathbf{X}</em>{t}\mathbf{W}<em>{x h}+\left(\mathbf{R}</em>{t}\odot \mathbf{H}<em>{t-1}\right)\mathbf{W}</em>{h h}+\mathbf{b}_{h}\right)<br>$$</p>
+<p>此过程结合了 R 门的向量</p>
+
+</li>
+<li><p>把 Z 门加进来，输出隐向量</p>
+<p>Z 门和 R 门，二者之间的(0,1)向量可以决定新的隐向量$\mathbf{H}<em>t$是由旧隐状态$\mathbf{H}</em>{t-1}$决定得多还是由候选新隐状态$\tilde{\mathbf{H}}_t$决定的多</p>
+<p>二者做凸组合就行</p>
+<p>$$<br>\mathbf{H}<em>{t}&#x3D;\mathbf{Z}</em>{t}\odot \mathbf{H}<em>{t-1}+\left(1-\mathbf{Z}</em>{t}\right)\odot \tilde{\mathbf{H}}_{t} .<br>$$</p>
+
+</li>
+<li><p>Z 门代表的更新门使得过程中的长期依赖得以实现，相对的，R 门代表的重置门则实现了短期依赖</p>
+</li>
+</ol>
+</li>
+<li><p>Decoder</p>
+<ol>
+<li><p>RNN 解码器<br>通过 <code>Encoder</code>出来的最终代表整个句子的隐状态$\tilde{\mathbf{H}_m}$会进入到<code>Decoder</code>中作为初始隐状态$\mathbf{Z}_0$,第一个先输入的$\mathbf{X}_0$是一串指令<code>[start]</code>，之后的过程类似于上面提到的 GRU，但不同的是，这里隐状态的计算函数不同，同时为了生成目标词汇使用了<code>Softmax</code>函数，数学式子如下</p>
+<p>$$<br> s_t &#x3D; tanh(z_{t-1}U + s_{t-1}W)<br>$$<br>$$<br> \mathbf{p}_t &#x3D; Softmax(s_t \mathbf{V})<br>$$<br>其中$WUV$均是可学习的参数，$U$和$W$是保证循环合理的参数，同时也对过程起到调整，而$V$负责将当前时刻的状态定向到词表的概率分布中</p>
+</li>
+<li><p>Attention 机制的应用<br> 考虑到如果句子过长，这会使得到后期长一点的地方，RNN的参数的偏差会很大，导致严重的词语的预测失误和准确性下降，而注意力机制带来的自适应能力在面对长句子的背景下，同时可以注意到Encoder的每一个中间态的隐状态，使得每次的预测都和中间态接近</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本次学习进行到对于RNN的学习以及GRU的具体流程和原理，想不到又见到了Softmax、tanh之类的家伙，分外亲切。关于注意力机制的细节我仍然没有很清楚，这也导致结合起GRU和attn的时候我并非很清楚结果是什么，在下次的加入了transformer的任务中，或许能够一块理解注意力机制吧</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://hu-gamma.github.io">gamma</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://hu-gamma.github.io/2024/07/17/datawhale%E5%A4%8F%E4%BB%A4%E8%90%A5%E7%AC%AC%E4%BA%8C%E6%AC%A1NLP%E5%AD%A6%E4%B9%A0%E6%89%93%E5%8D%A1/">http://hu-gamma.github.io/2024/07/17/datawhale%E5%A4%8F%E4%BB%A4%E8%90%A5%E7%AC%AC%E4%BA%8C%E6%AC%A1NLP%E5%AD%A6%E4%B9%A0%E6%89%93%E5%8D%A1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/07/16/%E5%B8%B8%E7%94%A8hexo%E6%8C%87%E4%BB%A4/" title="常用hexo指令"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">常用hexo指令</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">gamma</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">2</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/hu-gamma"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/hu-gamma" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:merzasama2021@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">一点点小小的尝试</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E4%BB%BB%E5%8A%A1%E6%89%93%E5%8D%A1%E8%AE%B0%E5%BD%95"><span class="toc-number">1.</span> <span class="toc-text">第二次任务打卡记录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">1.1.</span> <span class="toc-text">环境配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E5%A4%84%E7%90%86"><span class="toc-number">1.2.</span> <span class="toc-text">数据集处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="toc-number">1.3.</span> <span class="toc-text">模型训练</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GRU"><span class="toc-number">1.3.1.</span> <span class="toc-text">GRU</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.4.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/17/datawhale%E5%A4%8F%E4%BB%A4%E8%90%A5%E7%AC%AC%E4%BA%8C%E6%AC%A1NLP%E5%AD%A6%E4%B9%A0%E6%89%93%E5%8D%A1/" title="datawhale夏令营第二次NLP学习打卡">datawhale夏令营第二次NLP学习打卡</a><time datetime="2024-07-17T14:50:10.000Z" title="Created 2024-07-17 22:50:10">2024-07-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/16/%E5%B8%B8%E7%94%A8hexo%E6%8C%87%E4%BB%A4/" title="常用hexo指令">常用hexo指令</a><time datetime="2024-07-16T01:26:03.000Z" title="Created 2024-07-16 09:26:03">2024-07-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By gamma</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
