@@ -1,0 +1,213 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>深度学习d4 | Gamma's Secret Space</title><meta name="author" content="gamma"><meta name="copyright" content="gamma"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="线性回归前提 各个自变量参数与应变量间存在大致的线性关系，允许存在一定的便宜和噪声 噪声需要是相对正常有规律的（正态分布或之类的规律）基本公式如果建立一个excel表格，我们会将样本作为行，特征作为列，而对于任何一个样本，线性回归的目的就是做出一个线性的式子去拟合一种变化使其得以进行预测那么线性回归在面对多维特征的时候会有 \hat{y} &#x3D; [w_1,w_2,..,w_n]\begin{bmat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习d4">
+<meta property="og:url" content="http://hu-gamma.github.io/2024/08/16/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0d4/index.html">
+<meta property="og:site_name" content="Gamma&#39;s Secret Space">
+<meta property="og:description" content="线性回归前提 各个自变量参数与应变量间存在大致的线性关系，允许存在一定的便宜和噪声 噪声需要是相对正常有规律的（正态分布或之类的规律）基本公式如果建立一个excel表格，我们会将样本作为行，特征作为列，而对于任何一个样本，线性回归的目的就是做出一个线性的式子去拟合一种变化使其得以进行预测那么线性回归在面对多维特征的时候会有 \hat{y} &#x3D; [w_1,w_2,..,w_n]\begin{bmat">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2024-08-16T07:23:01.000Z">
+<meta property="article:modified_time" content="2024-08-16T11:39:03.343Z">
+<meta property="article:author" content="gamma">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://hu-gamma.github.io/2024/08/16/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0d4/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '深度学习d4',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-08-16 19:39:03'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr class="custom-hr"/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Gamma's Secret Space"><span class="site-name">Gamma's Secret Space</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">深度学习d4</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-08-16T07:23:01.000Z" title="Created 2024-08-16 15:23:01">2024-08-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-08-16T11:39:03.343Z" title="Updated 2024-08-16 19:39:03">2024-08-16</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="深度学习d4"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h1><h2 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h2><ol>
+<li>各个自变量参数与应变量间存在大致的线性关系，允许存在一定的便宜和噪声</li>
+<li>噪声需要是相对正常有规律的（正态分布或之类的规律）<h2 id="基本公式"><a href="#基本公式" class="headerlink" title="基本公式"></a>基本公式</h2>如果建立一个excel表格，我们会将样本作为行，特征作为列，而对于任何一个样本，线性回归的目的就是做出一个线性的式子去拟合一种变化使其得以进行预测<br>那么线性回归在面对多维特征的时候会有<script type="math/tex; mode=display">
+\hat{y} = [w_1,w_2,..,w_n]\begin{bmatrix}
+ x_1\\ x_2 \\ .. \\ x_n
+\end{bmatrix}+b</script>$[w_1,w_2,…,w_n]$代表一个权重向量，实际上就是一个加权平均，化简后也就是<script type="math/tex; mode=display">\hat{y} = w^{T}x+b</script>扩展到整个数据集，那么数据集X就是一个矩阵，回归式就会变成<script type="math/tex; mode=display">\hat{y} = Xw + b</script>对于一整个线性回归的过程来说，我们的目的就是求出一组(w,b)使得拟合的质量最好<br>而要寻找(w,b)的过程需要两个东西</li>
+<li>拟合模型质量的评估标准</li>
+<li>可迭代的预测模型方法<h2 id="损失函数loss"><a href="#损失函数loss" class="headerlink" title="损失函数loss"></a>损失函数loss</h2>只要在做预测，就会存在偏差，在做线性回归时也一样存在预测值和真实值之间的误差，于是就需要loss函数来进行衡量<br>对于每一个样本，样本的损失存在以下关系<script type="math/tex; mode=display">
+l^{(i)} = \frac{1}{2} (\hat{y}^{(i)} - {y}^{(i)})^2</script>但是这是针对单个样本的损失，考虑到数据集的数据质量，又考虑到二次平方在损失较大时会产生很大的误差，因此评估整个数据集中样本的综合损失是必要的,我们将所有样本取均值即可<script type="math/tex; mode=display">
+L(w,b) = \frac{1}{n}\sum_{i=1}^{n}l^{(i)}(w,b) =\frac{1}{n} \sum_{i=1}^{n}(w^T x^{(i)} + b - y^{(i)})^2</script>实际上如果能够求出$(w^<em>,b^</em>)$使得其满足<script type="math/tex; mode=display">
+w^*,b^* = \argmin_{w,b}(L(w,b))</script>那么这组数据就是所求的结果<h2 id="随机梯度下降"><a href="#随机梯度下降" class="headerlink" title="随机梯度下降"></a>随机梯度下降</h2>首先明确，线性回归的计算实际上是个最优化问题，求的是损失最小值<br>在深度学习中，常用梯度下降法来进行优化，但是考虑到一般的梯度下降法要计算全局损失在每一个自变量上的梯度，那么在每次迭代时，要先算一遍全局损失，算死你，于是小规模的数据量计算代替全局数据的随机梯度下降法应运而生<br>流程如下<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">graph TB</span><br><span class="line">    A[输入一组参数w和b] --&gt; B</span><br><span class="line">    B(选出一个小批量的数据D) --&gt; C(计算小批量数据内的平均损失L关于各个参数的梯度G)</span><br><span class="line">    C --&gt; D(G*正数参数η)</span><br><span class="line">    D --&gt; E(参数w和b减掉D步骤中的结果)</span><br></pre></td></tr></table></figure>
+如果在数学上表示，就分开来看，一个是针对w偏导计算，一个是针对b偏导计算<script type="math/tex; mode=display">
+w \leftarrow w-\frac{\eta}{|\mathcal{B}|}\sum_{i \in \mathcal{B}}\partial_w l^{(i)}(w,b) = w-\frac{\eta}{|\mathcal{B}|}\sum_{i \in \mathcal{B}}x^{(i)}(w^Tx^{(i)} + b - y^{(i)})</script><script type="math/tex; mode=display">
+b \leftarrow b-\frac{\eta}{|\mathcal{B}|}\sum_{i \in \mathcal{B}}\partial_b l^{(i)}(w,b) = b-\frac{\eta}{|\mathcal{B}|}\sum_{i \in \mathcal{B}}(w^Tx^{(i)} + b - y^{(i)})</script></li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://hu-gamma.github.io">gamma</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://hu-gamma.github.io/2024/08/16/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0d4/">http://hu-gamma.github.io/2024/08/16/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0d4/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/08/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0d3/" title="深度学习d3"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">深度学习d3</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">gamma</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/hu-gamma"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/hu-gamma" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:merzasama2021@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">一点点小小的尝试</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92"><span class="toc-number">1.</span> <span class="toc-text">线性回归</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E6%8F%90"><span class="toc-number">1.1.</span> <span class="toc-text">前提</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%85%AC%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">基本公式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0loss"><span class="toc-number">1.3.</span> <span class="toc-text">损失函数loss</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="toc-number">1.4.</span> <span class="toc-text">随机梯度下降</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/16/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0d4/" title="深度学习d4">深度学习d4</a><time datetime="2024-08-16T07:23:01.000Z" title="Created 2024-08-16 15:23:01">2024-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0d3/" title="深度学习d3">深度学习d3</a><time datetime="2024-08-12T07:21:42.000Z" title="Created 2024-08-12 15:21:42">2024-08-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/31/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0d2/" title="深度学习d2">深度学习d2</a><time datetime="2024-07-31T02:53:09.000Z" title="Created 2024-07-31 10:53:09">2024-07-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/24/%E5%8A%A8%E6%89%8B%E5%AD%A6%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0d1/" title="动手学深度学习d1">动手学深度学习d1</a><time datetime="2024-07-24T09:01:26.000Z" title="Created 2024-07-24 17:01:26">2024-07-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/20/datawhale%E7%AC%AC%E4%B8%89%E6%AC%A1%E6%89%93%E5%8D%A1Transformer%E9%83%A8%E5%88%86/" title="datawhale第三次打卡Transformer部分">datawhale第三次打卡Transformer部分</a><time datetime="2024-07-20T02:01:19.000Z" title="Created 2024-07-20 10:01:19">2024-07-20</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By gamma</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
